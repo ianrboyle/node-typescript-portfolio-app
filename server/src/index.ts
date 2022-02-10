@@ -43,6 +43,21 @@ app.get('/positions', async (req: Request, res: Response) => {
       console.error(err.message);
   }
 });
+
+
+//get position by ID
+app.get('/positions/:id', async (req: Request, res: Response) => {
+  try {
+      //console.log(req.params) ==> logs the params (:id)
+      const { id } = req.params;
+
+      const position = await pool.query('SELECT * FROM positions WHERE position_id  = $1', [id]);
+      res.json(position.rows[0]);
+  } catch (err: any) {
+      console.error(err.message);
+  }
+});
+
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello')
 });
