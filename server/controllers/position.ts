@@ -1,5 +1,7 @@
 import express, {Request, Response, NextFunction} from 'express'
 const pool =  require("../database/queries")
+import bodyParser from 'body-parser';
+
 
 
 // create new position
@@ -24,14 +26,27 @@ const getAllPositions = async (req: Request, res: Response, next: NextFunction) 
   }
 }
 
+//get position by ID
+const getOnePosition = async (req: Request, res: Response, next: NextFunction) => {
+    const id  = parseInt(req.params.id);
+  
+    pool.query('SELECT * FROM positions WHERE position_id = $1', [id], (err: any, results: any) => {
+      if (err) {
+        throw err
+      }
+      res.status(200).json(results.rows)
+    })  
+}
 
-export default {newPosition, getAllPositions};
+export default {newPosition, getAllPositions, getOnePosition};
 
-// get all positions
-// app.get('/positions', async (req: Request, res: Response) => {
+// app.get('/positions/:id', async (req: Request, res: Response) => {
 //   try {
-//       const allPositions = await pool.query('SELECT * FROM positions');
-//       res.json(allPositions.rows);
+//       //console.log(req.params) ==> logs the params (:id)
+//       const { id } = req.params;
+
+//       const position = await pool.query('SELECT * FROM positions WHERE position_id  = $1', [id]);
+//       res.json(position.rows[0]);
 //   } catch (err: any) {
 //       console.error(err.message);
 //   }
