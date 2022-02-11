@@ -6,5 +6,6 @@ CREATE TABLE positions(
   company_name VARCHAR (100),
   cost_basis FLOAT,
   current_price FLOAT,
-  quantity FLOAT
+  quantity FLOAT,
+  current_value FLOAT
 );

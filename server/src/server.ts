@@ -22,45 +22,6 @@ app.use((req, res, next) => {
 });
 app.use('/', routes);
 
-//ROUTES 
-
-
-
-//get position by ID
-// app.get('/positions/:id', async (req: Request, res: Response) => {
-//   try {
-//       //console.log(req.params) ==> logs the params (:id)
-//       const { id } = req.params;
-
-//       const position = await pool.query('SELECT * FROM positions WHERE position_id  = $1', [id]);
-//       res.json(position.rows[0]);
-//   } catch (err: any) {
-//       console.error(err.message);
-//   }
-// });
-
-// app.put('/positions/:id', async (req: Request, res: Response) => {
-//   try {
-//       //console.log(req.params) ==> logs the params (:id)
-//       const { id } = req.params;
-//       const { cost_basis, current_price, quantity  } = req.body;
-//       const updatePosition = await pool.query('UPDATE positions SET quantity = $1, cost_basis = $2, current_price = $3 WHERE position_id = $4', [quantity, cost_basis, current_price, id]);
-//       res.json('Position updated');
-//   } catch (err: any) {
-//       console.error(err.message);
-//   }
-// })
-
-// app.delete('/positions/:id', async (req: Request, res: Response) => {
-//   try {
-//       //console.log(req.params) ==> logs the params (:id)
-//       const { id } = req.params;
-//       const deletePosition = await pool.query('DELETE FROM positions WHERE position_id = $1', [id])
-//       res.json('Position deleted');
-//   } catch (err: any) {
-//       console.error(err.message);
-//   }
-// })
 
 
 
