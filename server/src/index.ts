@@ -70,7 +70,16 @@ app.put('/positions/:id', async (req: Request, res: Response) => {
   }
 })
 
-
+app.delete('/positions/:id', async (req: Request, res: Response) => {
+  try {
+      //console.log(req.params) ==> logs the params (:id)
+      const { id } = req.params;
+      const deletePosition = await pool.query('DELETE FROM positions WHERE position_id = $1', [id])
+      res.json('Position deleted');
+  } catch (err: any) {
+      console.error(err.message);
+  }
+})
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello')
