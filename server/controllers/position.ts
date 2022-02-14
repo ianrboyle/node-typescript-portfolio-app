@@ -1,15 +1,18 @@
 import express, {Request, Response, NextFunction} from 'express'
+import getPositionInfo from "../services/yahoo"
 const pool =  require("../database/queries")
-import bodyParser from 'body-parser';
-
 
 
 // create new position
 const newPosition = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { symbol, company_name, cost_basis, current_price, quantity, current_value  } = req.body;
+    const { symbol, cost_basis, quantity } = req.body;
+    const positionInfo = await getPositionInfo(symbol)
+
+    const currentPrice: number = positionInfo[0]
+    const companyName = positionInfo[1]
     //$1 allows variables to be added to db?
-    const newPosition = await pool.query('INSERT INTO positions (symbol, company_name, cost_basis, current_price, quantity, current_value) VALUES($1, $2, $3, $4, $5, $6) RETURNING *', [symbol, company_name, cost_basis, current_price, quantity, (current_price * quantity)]);
+    const newPosition = await pool.query('INSERT INTO positions (symbol, company_name, cost_basis, current_price, quantity, current_value) VALUES($1, $2, $3, $4, $5, $6) RETURNING *', [symbol, companyName, cost_basis, currentPrice, quantity, (currentPrice * quantity)]);
 
 
     res.json(newPosition.rows[0]);
@@ -23,6 +26,7 @@ const getAllPositions = async (req: Request, res: Response, next: NextFunction) 
   try {
     const allPositions = await pool.query('SELECT * FROM positions');
     res.json(allPositions.rows);
+    console.log("MY_VARIABLE: " + process.env.YAHOO_API_KEY);
   } catch (err: any) {
       console.error(err.message);
   }

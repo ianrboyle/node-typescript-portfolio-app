@@ -8,6 +8,7 @@ const routes = require('../routes/position')
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+require('dotenv').config();
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
